@@ -1,4 +1,4 @@
-# myapp
+# Flutter TEMPLATE
 
 A new Flutter project.
 
