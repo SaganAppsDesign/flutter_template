@@ -19,7 +19,6 @@ void main() {
 
   const tCollection = 'test';
   const tData = {'key': 'value'};
-  const tId = '123';
 
   group('saveData', () {
     test(

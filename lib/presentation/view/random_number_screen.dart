@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
+import 'package:myapp/l10n/app_localizations.dart';
+import 'package:myapp/presentation/widgets/primary_button.dart';
 
 class RandomNumberScreen extends StatelessWidget {
   const RandomNumberScreen({super.key});
@@ -18,12 +20,18 @@ class RandomNumberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RandomNumberViewModel>();
+    final l10n = AppLocalizations.of(context);
+
+    if (l10n == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(title: const Text('Premium Template')),
+      appBar: AppBar(title: Text(l10n.appTitle)),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -60,7 +68,7 @@ class RandomNumberView extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Current Value',
+                        l10n.currentValue,
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                           letterSpacing: 1.2,
@@ -114,18 +122,13 @@ class RandomNumberView extends StatelessWidget {
               // Action Button
               SizedBox(
                 width: double.infinity,
-                child: FilledButton.icon(
+                child: PrimaryButton(
+                  label: l10n.generateNumber,
                   onPressed: viewModel.isLoading
                       ? null
                       : () => viewModel.fetchRandomNumber(),
-                  icon: const Icon(Icons.refresh_rounded),
-                  label: const Text('Generate Number'),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
+                  icon: Icons.refresh_rounded,
+                  isLoading: viewModel.isLoading,
                 ),
               ),
               const SizedBox(height: 16),

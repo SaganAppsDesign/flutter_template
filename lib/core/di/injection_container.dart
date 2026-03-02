@@ -8,6 +8,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:myapp/core/services/secure_storage_service.dart';
 import 'package:myapp/core/network/dio_client.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:myapp/domain/repositories/auth_repository.dart';
+import 'package:myapp/data/datasources/firebase_auth_service.dart';
+import 'package:myapp/core/config/app_config.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:myapp/data/datasources/firestore_remote_data_source.dart';
 import 'package:myapp/domain/repositories/firestore_repository.dart';
@@ -39,6 +44,7 @@ Future<void> init() async {
   sl.registerLazySingleton<FirestoreRepository>(
     () => FirestoreRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<AuthRepository>(() => FirebaseAuthService(sl()));
 
   // Core
   sl.registerLazySingleton<SecurityService>(
@@ -49,4 +55,8 @@ Future<void> init() async {
   // External
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton(() => FirebaseAuth.instance);
+
+  // App Config (can be initialized based on environment)
+  sl.registerLazySingleton(() => AppConfig.dev());
 }
