@@ -5,8 +5,15 @@ import 'package:myapp/core/di/injection_container.dart' as di;
 import 'package:myapp/core/navigation/app_router.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Note: To use Firebase, you must generate firebase_options.dart
+  // using 'flutterfire configure' and pass it to initializeApp.
+  await Firebase.initializeApp();
+
   await di.init();
   runApp(const MyApp());
 }

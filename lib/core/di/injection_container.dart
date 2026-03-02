@@ -8,6 +8,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:myapp/core/services/secure_storage_service.dart';
 import 'package:myapp/core/network/dio_client.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:myapp/data/datasources/firestore_remote_data_source.dart';
+import 'package:myapp/domain/repositories/firestore_repository.dart';
+import 'package:myapp/data/repositories_impl/firestore_repository_impl.dart';
 
 final sl = GetIt.instance;
 
@@ -20,14 +24,20 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => GetRandomNumberUseCase(sl()));
 
+  // Data sources
+  sl.registerLazySingleton<RandomNumberRemoteDataSource>(
+    () => RandomNumberRemoteDataSourceImpl(),
+  );
+  sl.registerLazySingleton<FirestoreRemoteDataSource>(
+    () => FirestoreRemoteDataSourceImpl(sl()),
+  );
+
   // Repository
   sl.registerLazySingleton<RandomNumberRepository>(
     () => RandomNumberRepositoryImpl(remoteDataSource: sl()),
   );
-
-  // Data sources
-  sl.registerLazySingleton<RandomNumberRemoteDataSource>(
-    () => RandomNumberRemoteDataSourceImpl(),
+  sl.registerLazySingleton<FirestoreRepository>(
+    () => FirestoreRepositoryImpl(sl()),
   );
 
   // Core
@@ -38,4 +48,5 @@ Future<void> init() async {
 
   // External
   sl.registerLazySingleton(() => Dio());
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
 }

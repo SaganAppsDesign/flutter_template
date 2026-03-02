@@ -14,3 +14,11 @@ class NetworkFailure extends Failure {
 class CacheFailure extends Failure {
   const CacheFailure([super.message]);
 }
+
+class FirebaseFailure extends Failure {
+  const FirebaseFailure([super.message]);
+}
+
+class FirestoreFailure extends FirebaseFailure {
+  const FirestoreFailure([super.message]);
+}
