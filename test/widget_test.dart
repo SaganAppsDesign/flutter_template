@@ -5,26 +5,28 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:myapp/main.dart';
+import 'package:myapp/core/di/injection_container.dart' as di;
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  setUp(() async {
+    // Initialize dependency injection for the test environment
+    await di.init();
+  });
+
+  testWidgets('Premium Template initial UI test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that our app bar has the correct title.
+    expect(find.text('Premium Template'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify that the initial placeholder exists.
+    expect(find.text('Current Value'), findsOneWidget);
+    expect(find.text('--'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify the action button exists.
+    expect(find.text('Generate Number'), findsOneWidget);
   });
 }

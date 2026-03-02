@@ -6,7 +6,8 @@ import 'package:myapp/domain/entities/random_number.dart';
 import 'package:myapp/domain/repositories/random_number_repository.dart';
 import 'package:myapp/domain/usecases/get_random_number_usecase.dart';
 
-class MockRandomNumberRepository extends Mock implements RandomNumberRepository {}
+class MockRandomNumberRepository extends Mock
+    implements RandomNumberRepository {}
 
 void main() {
   late GetRandomNumberUseCase usecase;
@@ -17,22 +18,20 @@ void main() {
     usecase = GetRandomNumberUseCase(mockRepository);
   });
 
-  const tRandomNumber = RandomNumber(value: 42);
+  final tRandomNumber = RandomNumber(value: 42);
 
-  test(
-    'should get random number from the repository',
-    () async {
-      // arrange
-      when(() => mockRepository.getRandomNumber())
-          .thenAnswer((_) async => const Right(tRandomNumber));
-      
-      // act
-      final result = await usecase(NoParams());
-      
-      // assert
-      expect(result, const Right(tRandomNumber));
-      verify(() => mockRepository.getRandomNumber());
-      verifyNoMoreInteractions(mockRepository);
-    },
-  );
+  test('should get random number from the repository', () async {
+    // arrange
+    when(
+      () => mockRepository.getRandomNumber(),
+    ).thenAnswer((_) async => Right(tRandomNumber));
+
+    // act
+    final result = await usecase(NoParams());
+
+    // assert
+    expect(result, Right(tRandomNumber));
+    verify(() => mockRepository.getRandomNumber());
+    verifyNoMoreInteractions(mockRepository);
+  });
 }

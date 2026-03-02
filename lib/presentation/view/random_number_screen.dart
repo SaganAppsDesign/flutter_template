@@ -18,55 +18,125 @@ class RandomNumberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RandomNumberViewModel>();
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Random Number MVVM'),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(24),
-        width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Your Random Number is:',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-            const SizedBox(height: 16),
-            if (viewModel.isLoading)
-              const CircularProgressIndicator()
-            else
-              Text(
-                viewModel.randomNumber?.toString() ?? '?',
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+      backgroundColor: colorScheme.surface,
+      appBar: AppBar(title: const Text('Premium Template')),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Header Illustration/Icon
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer.withAlpha(50),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.auto_awesome,
+                  size: 64,
+                  color: colorScheme.primary,
+                ),
               ),
-            if (viewModel.errorMessage != null) ...[
+              const SizedBox(height: 40),
+
+              // Main Content Card
+              Card(
+                elevation: 0,
+                color: colorScheme.surfaceContainerHighest.withAlpha(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                  side: BorderSide(
+                    color: colorScheme.outlineVariant.withAlpha(100),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Current Value',
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      if (viewModel.isLoading)
+                        SizedBox(
+                          height: 80,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 6,
+                              strokeCap: StrokeCap.round,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                        )
+                      else
+                        Text(
+                          viewModel.randomNumber?.toString() ?? '--',
+                          style: theme.textTheme.displayLarge?.copyWith(
+                            fontSize: 84,
+                            fontWeight: FontWeight.w800,
+                            color: colorScheme.primary,
+                            letterSpacing: -2,
+                          ),
+                        ),
+                      const SizedBox(height: 8),
+                      if (viewModel.errorMessage != null)
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: colorScheme.errorContainer.withAlpha(50),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            viewModel.errorMessage!,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: colorScheme.error,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 60),
+
+              // Action Button
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: viewModel.isLoading
+                      ? null
+                      : () => viewModel.fetchRandomNumber(),
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: const Text('Generate Number'),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 16),
               Text(
-                viewModel.errorMessage!,
-                style: const TextStyle(color: Colors.red),
-                textAlign: TextAlign.center,
+                'Powered by Clean Architecture',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant.withAlpha(150),
+                ),
               ),
             ],
-            const SizedBox(height: 48),
-            ElevatedButton.icon(
-              onPressed: viewModel.isLoading
-                  ? null
-                  : () => viewModel.fetchRandomNumber(),
-              icon: const Icon(Icons.refresh),
-              label: const Text('Generate New Number'),
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

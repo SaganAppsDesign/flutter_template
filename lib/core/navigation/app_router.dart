@@ -1,0 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myapp/presentation/view/random_number_screen.dart';
+
+class AppRouter {
+  static final GoRouter router = GoRouter(
+    initialLocation: '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        name: 'home',
+        builder: (context, state) => const RandomNumberScreen(),
+      ),
+      // Add more routes here as the app grows
+    ],
+    errorBuilder: (context, state) =>
+        Scaffold(body: Center(child: Text('Error: ${state.error}'))),
+  );
+}
