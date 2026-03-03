@@ -1,15 +1,14 @@
 enum AppEnvironment { dev, prod }
 
 class AppConfig {
-  final AppEnvironment environment;
-  final String apiBaseUrl;
-  final String firebaseApiKey;
-
   AppConfig({
     required this.environment,
     required this.apiBaseUrl,
     required this.firebaseApiKey,
   });
+  final AppEnvironment environment;
+  final String apiBaseUrl;
+  final String firebaseApiKey;
 
   static AppConfig dev() => AppConfig(
     environment: AppEnvironment.dev,

@@ -6,7 +6,7 @@ import 'package:myapp/core/navigation/app_router.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
 import 'package:myapp/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter/foundation.dart'; // Required for debugPrint
+// Required for debugPrint
 
 import 'package:firebase_core/firebase_core.dart';
 

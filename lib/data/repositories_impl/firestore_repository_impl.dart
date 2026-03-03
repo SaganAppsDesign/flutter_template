@@ -4,9 +4,8 @@ import 'package:myapp/data/datasources/firestore_remote_data_source.dart';
 import 'package:myapp/domain/repositories/firestore_repository.dart';
 
 class FirestoreRepositoryImpl implements FirestoreRepository {
-  final FirestoreRemoteDataSource remoteDataSource;
-
   FirestoreRepositoryImpl(this.remoteDataSource);
+  final FirestoreRemoteDataSource remoteDataSource;
 
   @override
   Future<Either<Failure, void>> saveData(

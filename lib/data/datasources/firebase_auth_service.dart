@@ -4,9 +4,8 @@ import 'package:myapp/core/errors/failures.dart';
 import 'package:myapp/domain/repositories/auth_repository.dart';
 
 class FirebaseAuthService implements AuthRepository {
-  final FirebaseAuth _firebaseAuth;
-
   FirebaseAuthService(this._firebaseAuth);
+  final FirebaseAuth _firebaseAuth;
 
   @override
   Future<Either<Failure, void>> signIn(String email, String password) async {

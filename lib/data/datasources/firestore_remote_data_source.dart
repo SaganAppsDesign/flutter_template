@@ -18,9 +18,8 @@ abstract class FirestoreRemoteDataSource {
 }
 
 class FirestoreRemoteDataSourceImpl implements FirestoreRemoteDataSource {
-  final FirebaseFirestore _firestore;
-
   FirestoreRemoteDataSourceImpl(this._firestore);
+  final FirebaseFirestore _firestore;
 
   @override
   Future<void> addDocument(

@@ -8,7 +8,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:myapp/core/services/secure_storage_service.dart';
 import 'package:myapp/core/network/dio_client.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:myapp/domain/repositories/auth_repository.dart';
 import 'package:myapp/data/datasources/firebase_auth_service.dart';
