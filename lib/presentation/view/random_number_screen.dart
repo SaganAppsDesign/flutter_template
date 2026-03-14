@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
+import 'package:myapp/presentation/viewmodel/theme_viewmodel.dart';
 import 'package:myapp/l10n/app_localizations.dart';
 import 'package:myapp/presentation/widgets/primary_button.dart';
 
@@ -31,7 +32,25 @@ class RandomNumberView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(title: Text(l10n.appTitle)),
+      appBar: AppBar(
+        title: Text(l10n.appTitle),
+        actions: [
+          Consumer<ThemeViewModel>(
+            builder: (context, themeViewModel, child) {
+              return IconButton(
+                icon: Icon(
+                  themeViewModel.isDarkMode
+                      ? Icons.light_mode_rounded
+                      : Icons.dark_mode_rounded,
+                ),
+                onPressed: () => themeViewModel.toggleTheme(),
+                tooltip: l10n.toggleThemeTooltip,
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -105,7 +124,9 @@ class RandomNumberView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            viewModel.errorMessage!,
+                            viewModel.errorMessage!.isEmpty
+                                ? l10n.genericError
+                                : viewModel.errorMessage!,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: colorScheme.error,
                             ),
@@ -133,7 +154,7 @@ class RandomNumberView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                'Powered by Clean Architecture',
+                l10n.poweredByTemplate,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant.withAlpha(150),
                 ),

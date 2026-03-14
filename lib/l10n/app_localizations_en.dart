@@ -19,4 +19,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currentValue => 'Current Value';
+
+  @override
+  String get toggleThemeTooltip => 'Toggle theme';
+
+  @override
+  String get poweredByTemplate => 'Powered by Clean Architecture';
+
+  @override
+  String get genericError => 'Something went wrong. Please try again.';
+
+  @override
+  String get navigationErrorPrefix => 'Error';
 }

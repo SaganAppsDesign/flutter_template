@@ -19,4 +19,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get currentValue => 'Valor Actual';
+
+  @override
+  String get toggleThemeTooltip => 'Cambiar tema';
+
+  @override
+  String get poweredByTemplate => 'Desarrollado con Clean Architecture';
+
+  @override
+  String get genericError => 'Algo salió mal. Inténtalo nuevamente.';
+
+  @override
+  String get navigationErrorPrefix => 'Error';
 }

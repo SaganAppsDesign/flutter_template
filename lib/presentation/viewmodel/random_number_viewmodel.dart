@@ -16,11 +16,7 @@ class RandomNumberViewModel extends BaseViewModel {
     final result = await _getRandomNumberUseCase(NoParams());
 
     result.fold(
-      (failure) => setError(
-        failure.message.isNotEmpty
-            ? failure.message
-            : 'Error fetching random number',
-      ),
+      (failure) => setError(failure.message),
       (randomNumber) => _randomNumber = randomNumber.value,
     );
 

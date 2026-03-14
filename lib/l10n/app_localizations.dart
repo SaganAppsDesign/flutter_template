@@ -121,6 +121,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Current Value'**
   String get currentValue;
+
+  /// No description provided for @toggleThemeTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle theme'**
+  String get toggleThemeTooltip;
+
+  /// No description provided for @poweredByTemplate.
+  ///
+  /// In en, this message translates to:
+  /// **'Powered by Clean Architecture'**
+  String get poweredByTemplate;
+
+  /// No description provided for @genericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get genericError;
+
+  /// No description provided for @navigationErrorPrefix.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get navigationErrorPrefix;
 }
 
 class _AppLocalizationsDelegate

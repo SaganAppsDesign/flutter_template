@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:myapp/core/config/app_config.dart';
 import 'package:myapp/core/di/injection_container.dart' as di;
 import 'package:mocktail/mocktail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
+import 'package:myapp/presentation/viewmodel/theme_viewmodel.dart';
 import 'package:myapp/presentation/view/random_number_screen.dart';
 import 'package:myapp/l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,7 +20,7 @@ void main() {
   setUpAll(() async {
     // Clear GetIt before all tests
     await di.sl.reset();
-    await di.init();
+    await di.init(AppConfig.dev);
     di.sl.allowReassignment = true;
     di.sl.registerLazySingleton<FirebaseAuth>(() => MockFirebaseAuth());
     di.sl.registerLazySingleton<FirebaseFirestore>(
@@ -34,6 +36,7 @@ void main() {
       MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => di.sl<RandomNumberViewModel>()),
+          ChangeNotifierProvider(create: (_) => di.sl<ThemeViewModel>()),
         ],
         child: MaterialApp(
           localizationsDelegates: const [

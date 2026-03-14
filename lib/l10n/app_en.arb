@@ -2,5 +2,9 @@
   "appTitle": "Flutter Premium Template",
   "homeTitle": "Home Screen",
   "generateNumber": "Generate Number",
-  "currentValue": "Current Value"
+  "currentValue": "Current Value",
+  "toggleThemeTooltip": "Toggle theme",
+  "poweredByTemplate": "Powered by Clean Architecture",
+  "genericError": "Something went wrong. Please try again.",
+  "navigationErrorPrefix": "Error"
 }
