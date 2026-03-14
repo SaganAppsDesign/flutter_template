@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/presentation/viewmodel/random_number_viewmodel.dart';
+import 'package:myapp/presentation/viewmodel/theme_viewmodel.dart';
+import 'package:myapp/l10n/app_localizations.dart';
+import 'package:myapp/presentation/widgets/primary_button.dart';
 
 class RandomNumberScreen extends StatelessWidget {
   const RandomNumberScreen({super.key});
@@ -18,15 +21,39 @@ class RandomNumberView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RandomNumberViewModel>();
+    final l10n = AppLocalizations.of(context);
+
+    if (l10n == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(title: const Text('Premium Template')),
+      appBar: AppBar(
+        title: Text(l10n.appTitle),
+        actions: [
+          Consumer<ThemeViewModel>(
+            builder: (context, themeViewModel, child) {
+              return IconButton(
+                icon: Icon(
+                  themeViewModel.isDarkMode
+                      ? Icons.light_mode_rounded
+                      : Icons.dark_mode_rounded,
+                ),
+                onPressed: () => themeViewModel.toggleTheme(),
+                tooltip: l10n.toggleThemeTooltip,
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -56,11 +83,11 @@ class RandomNumberView extends StatelessWidget {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(32.0),
+                  padding: const EdgeInsets.all(32),
                   child: Column(
                     children: [
                       Text(
-                        'Current Value',
+                        l10n.currentValue,
                         style: theme.textTheme.titleMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                           letterSpacing: 1.2,
@@ -97,7 +124,9 @@ class RandomNumberView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            viewModel.errorMessage!,
+                            viewModel.errorMessage!.isEmpty
+                                ? l10n.genericError
+                                : viewModel.errorMessage!,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: colorScheme.error,
                             ),
@@ -114,23 +143,18 @@ class RandomNumberView extends StatelessWidget {
               // Action Button
               SizedBox(
                 width: double.infinity,
-                child: FilledButton.icon(
+                child: PrimaryButton(
+                  label: l10n.generateNumber,
                   onPressed: viewModel.isLoading
                       ? null
                       : () => viewModel.fetchRandomNumber(),
-                  icon: const Icon(Icons.refresh_rounded),
-                  label: const Text('Generate Number'),
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
+                  icon: Icons.refresh_rounded,
+                  isLoading: viewModel.isLoading,
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                'Powered by Clean Architecture',
+                l10n.poweredByTemplate,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant.withAlpha(150),
                 ),

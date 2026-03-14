@@ -8,9 +8,8 @@ abstract class SecurityService {
 }
 
 class SecureStorageService implements SecurityService {
-  final FlutterSecureStorage _storage;
-
   SecureStorageService(this._storage);
+  final FlutterSecureStorage _storage;
 
   @override
   Future<void> write(String key, String value) async {

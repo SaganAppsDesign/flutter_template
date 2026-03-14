@@ -5,9 +5,8 @@ import 'package:myapp/domain/entities/random_number.dart';
 import 'package:myapp/domain/repositories/random_number_repository.dart';
 
 class RandomNumberRepositoryImpl implements RandomNumberRepository {
-  final RandomNumberRemoteDataSource remoteDataSource;
-
   RandomNumberRepositoryImpl({required this.remoteDataSource});
+  final RandomNumberRemoteDataSource remoteDataSource;
 
   @override
   Future<Either<Failure, RandomNumber>> getRandomNumber() async {

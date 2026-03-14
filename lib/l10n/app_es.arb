@@ -1,0 +1,10 @@
+{
+  "appTitle": "Plantilla Flutter Premium",
+  "homeTitle": "Pantalla de Inicio",
+  "generateNumber": "Generar Número",
+  "currentValue": "Valor Actual",
+  "toggleThemeTooltip": "Cambiar tema",
+  "poweredByTemplate": "Desarrollado con Clean Architecture",
+  "genericError": "Algo salió mal. Inténtalo nuevamente.",
+  "navigationErrorPrefix": "Error"
+}

@@ -3,9 +3,8 @@ import 'package:myapp/core/presentation/base_viewmodel.dart';
 import 'package:myapp/core/usecases/usecase.dart';
 
 class RandomNumberViewModel extends BaseViewModel {
-  final GetRandomNumberUseCase _getRandomNumberUseCase;
-
   RandomNumberViewModel(this._getRandomNumberUseCase);
+  final GetRandomNumberUseCase _getRandomNumberUseCase;
 
   int? _randomNumber;
   int? get randomNumber => _randomNumber;
@@ -17,11 +16,7 @@ class RandomNumberViewModel extends BaseViewModel {
     final result = await _getRandomNumberUseCase(NoParams());
 
     result.fold(
-      (failure) => setError(
-        failure.message.isNotEmpty
-            ? failure.message
-            : 'Error fetching random number',
-      ),
+      (failure) => setError(failure.message),
       (randomNumber) => _randomNumber = randomNumber.value,
     );
 
